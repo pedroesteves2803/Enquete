@@ -1,0 +1,39 @@
+MVP, Enquetes (Laravel + Blade)
+
+Contexto
+Stack: Laravel 13, Sqlite, Blade e tailwind css.
+Objetivo: Crie enquetes com alternativas unicas e acompanhae os resultados.
+Fluxo: Crio a enquete com um tempo limite envio um link para acesso. Abre o link votam. E no final do tempo Limite aparece o resultado com um grafico pizza de cada resposta.
+
+Setup ja executado
+
+# Blueprint (Gerador de models/migrations/factories/seeder)
+composer require -W --dev laravel-shift/blueprint
+
+
+models:
+  Enquete:
+    titulo: string
+    descricao: text nullable
+    data_encerramento: datetime
+    slug: string unique
+    relationships:
+      hasMany: Alternativa
+
+  Alternativa:
+    enquete_id: id foreign
+    texto: string
+    relationships:
+      hasMany: Voto
+
+  Voto:
+    alternativa_id: id foreign
+    identificador: string nullable
+
+regras de modelagem:
+
+use apenas tipos de colunas validos do migrations, se não tiver certeza de qu uma sintaxe existe no blueprint, use a forma simples e ajuste depois na mão, em vez de inventar.
+
+depois de rodar o blueprint:build, asjuste as factories para gerar dados em realista em PT-BR.
+
+
